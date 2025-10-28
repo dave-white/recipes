@@ -1,22 +1,26 @@
 'use client';
 
 import { Card, Typography } from '@material-tailwind/react';
+import { Ingredient, Quantity } from './types';
+import { ButtonGroup, Button } from '@material-tailwind/react'
+import { useState } from 'react';
 
-interface Quantity {
-	system: string,
-	value: number,
-	unit: string
-};
+const INGR_TBL_HEADINGS = ["Name", "Quantity", "Notes"];
 
-interface Ingredient {
-	name: string,
-	note: string,
-	quantity: Array<Quantity> | number
-};
+enum MEASURE_SYSTEM {
+	US,
+	Metric
+}
 
-function ingredientRows(ingredients: [Ingredient]) {
+function ingredientRows(ingredients: [Ingredient], sys: MEASURE_SYSTEM) {
 	return ingredients.map((ingredient: Ingredient) => {
-		if (Array.isArray(ingredient.quantity))
+		if (Array.isArray(ingredient.quantity)) {
+			let sys_str: string;
+			if (sys == MEASURE_SYSTEM.Metric) sys_str = "Metric";
+			else sys_str = "US";
+
+			const quantity = ingredient.quantity.find((quantity: Quantity) => quantity.system === sys_str) ?? ingredient.quantity[0];
+
 			return (
 				<tr key={ingredient.name} className="even:bg-blue-gray-50/50">
 					<td className="p-4">
@@ -26,7 +30,7 @@ function ingredientRows(ingredients: [Ingredient]) {
 					</td>
 					<td className="p-4">
 						<Typography variant="small" color="blue-gray" className="font-normal">
-							{ingredient.quantity[0].value + " " + ingredient.quantity[0].unit}
+							{quantity.value + " " + quantity.unit}
 						</Typography>
 					</td>
 					<td className="p-4">
@@ -36,7 +40,7 @@ function ingredientRows(ingredients: [Ingredient]) {
 					</td>
 				</tr>
 			);
-		else
+		} else {
 			return (
 				<tr key={ingredient.name} className="even:bg-blue-gray-50/50">
 					<td className="p-4">
@@ -55,14 +59,27 @@ function ingredientRows(ingredients: [Ingredient]) {
 						</Typography>
 					</td>
 				</tr>
-			)
+			);
+		}
 	});
 }
 
-const INGR_TBL_HEADINGS = ["Name", "Quantity", "Notes"];
+export default function IngredientTable(
+	{ ingredients }:
+		{ ingredients: [Ingredient] }
+) {
+	const [sys, setMeasureSys] = useState(MEASURE_SYSTEM.US);
 
-export default function IngredientTable({ ingredients }: { ingredients: [Ingredient] }) {
+	function handleSetMeasureSys(sys: MEASURE_SYSTEM) {
+		setMeasureSys(sys);
+	};
+
 	return (
+		<div>
+		<ButtonGroup>
+		<Button onClick={() => handleSetMeasureSys(MEASURE_SYSTEM.US)}>US</Button>
+		<Button onClick={() => handleSetMeasureSys(MEASURE_SYSTEM.Metric)}>Metric</Button>
+		</ButtonGroup>
 		<Card className="h-full w-full overflow-scroll">
 			<table className="w-full min-w-max table-auto text-left">
 				<thead>
@@ -81,9 +98,11 @@ export default function IngredientTable({ ingredients }: { ingredients: [Ingredi
 					</tr>
 				</thead>
 				<tbody>
-					{ingredientRows(ingredients)}
+					{ingredientRows(ingredients, sys)}
 				</tbody>
 			</table>
 		</Card>
+		</div>
 	);
 }
+
