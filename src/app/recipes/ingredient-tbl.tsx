@@ -75,33 +75,38 @@ export default function IngredientTable(
 	};
 
 	return (
-		<div>
-		<ButtonGroup>
-		<Button onClick={() => handleSetMeasureSys(MEASURE_SYSTEM.US)}>US</Button>
-		<Button onClick={() => handleSetMeasureSys(MEASURE_SYSTEM.Metric)}>Metric</Button>
-		</ButtonGroup>
-		<Card className="h-full w-full overflow-scroll">
-			<table className="w-full min-w-max table-auto text-left">
-				<thead>
-					<tr>
-						{INGR_TBL_HEADINGS.map((head) => (
-							<th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
-								<Typography
-									variant="small"
-									color="blue-gray"
-									className="font-normal leading-none opacity-70"
-								>
-									{head}
-								</Typography>
-							</th>
-						))}
-					</tr>
-				</thead>
-				<tbody>
-					{ingredientRows(ingredients, sys)}
-				</tbody>
-			</table>
-		</Card>
+		<div className='flex flex-col gap-4'>
+			<div className='flex flex-row justify-between'>
+				<Typography variant="h2">
+					Ingredients
+				</Typography>
+				<ButtonGroup>
+					<Button onClick={() => handleSetMeasureSys(MEASURE_SYSTEM.US)}>US</Button>
+					<Button onClick={() => handleSetMeasureSys(MEASURE_SYSTEM.Metric)}>Metric</Button>
+				</ButtonGroup>
+			</div>
+			<Card className="h-full w-full overflow-scroll">
+				<table className="w-full min-w-max table-auto text-left">
+					<thead>
+						<tr>
+							{INGR_TBL_HEADINGS.map((head) => (
+								<th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+									<Typography
+										variant="small"
+										color="blue-gray"
+										className="font-normal leading-none opacity-70"
+									>
+										{head}
+									</Typography>
+								</th>
+							))}
+						</tr>
+					</thead>
+					<tbody>
+						{ingredientRows(ingredients, sys)}
+					</tbody>
+				</table>
+			</Card>
 		</div>
 	);
 }

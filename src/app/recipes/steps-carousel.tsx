@@ -35,7 +35,7 @@ function StepsCarousel({ steps }: { steps: [string] }) {
 
 	return (
 		<div>
-			<Button onClick={handleOpen}>Open</Button>
+			<Button onClick={handleOpen}>Popout</Button>
 			<Dialog open={open} handler={handleOpen} size="lg">
 				<DialogHeader>
 					<Typography variant="h1">
