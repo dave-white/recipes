@@ -1,16 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+// Import DejaVu fonts
+const dejaVuSans = localFont({
+	src: '../../public/fonts/DejaVuSans.ttf'
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// const dejaVuSansMono = localFont({
+// 	src: '../../public/fonts/dejavusans.ttf'
+// });
 
 export const metadata: Metadata = {
   title: "Recipe book",
@@ -25,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={dejaVuSans.className + ' text-xl'}
       >
         {children}
       </body>
