@@ -2,6 +2,10 @@
 
 ## Priorities
 
+-  Refactor DB-connection code into lib module.
+
+-  Draw list of recipes for card gallery on Home page from DB.
+
 -  Improve the UI on TV and mobile screens.  In particular:
    
    -  Make navigation buttons more easily utilized with the TV remote.
@@ -13,9 +17,6 @@
 -  Filtering and lazy loading of recipes on the main page.
 
 ## Stretch goals
-
--  Load recipes into and integrate with database---perhaps PostgresSQL using 
-JSONB.
 
 -  Create TV and mobile apps.  Set up an API for this purpose.
 
